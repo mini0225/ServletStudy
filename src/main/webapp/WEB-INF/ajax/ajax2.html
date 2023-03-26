@@ -1,0 +1,65 @@
+<!-- 
+address1 : 부산광역시
+address2 : 북구
+address3 : 금곡동
+
+client -> server 로 ajax통신 날리고 server에서 client 가 다시 받을때는 address1,2,3을 한줄로 받기
+
+  -->
+  
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<input type="text" class ="address1" placeholder="address1">
+	<input type="text" class ="address2" placeholder="address2">
+	<input type="text" class ="address3" placeholder="address3">
+	<button type="button" class ="submit-button">전송</button>
+	
+	<script type="text/javascript">
+		const submitButton = document.querySelector(".submit-button");
+	
+		submitButton.onclick = () =>{
+			let address = {
+				address1 :document.querySelector(".address1").value,
+				address2 : document.querySelector(".address2").value,
+				address3 : document.querySelector(".address3").value
+		};
+				
+		//JSON.stringify(); 	객체(Object) ->JSON
+		//JSON.parse(); 		JSON-> 객체(Object)
+			
+		$.ajax({
+			async : false,
+			type : "post",  
+			url : "/api/ajax2", 
+			data: {
+				jsonData : JSON.stringify(address)  //key:value
+				},  
+			dataType : "text",
+			success : response =>{
+				alert("ajax2 post 요청성공");
+				console.log("ajax2 response(JSON) : "+ response);
+				console.log("ajax2 response(OBJECT)");
+				console.log(JSON.parse(response));
+				console.log("ajax2 response(OBJECT) : "+ JSON.parse(response).address1);
+				
+				//console.log("ajax2 response(OBJECT) : " + JSON.parse(response));
+				//이거는 문자열과 객체가 공존하기 때문에 출력x 나눠줘야함.
+			},
+			error : function(response) {
+				alert("ajax2 post 요청 실패")
+			}
+		});
+		
+		
+		alert("ajax2 데이터전송");
+	}
+	</script>
+	
+</body>
+</html>

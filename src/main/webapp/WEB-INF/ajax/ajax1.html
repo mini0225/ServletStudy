@@ -1,0 +1,69 @@
+<!-- 
+
+ajax 비동기 통신을 위해 사용, page 전환없이 데이터를 주고받기 위해 사용 
+latest쓰면 항상 최신버전 사용
+ <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+  -->
+  
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<input type="text" class ="username" placeholder="username">
+	<input type="text" class ="password" placeholder="password">
+	<input type="text" class ="name" placeholder="name">
+	<button type="button" class ="submit-button">전송</button>
+	
+	<script type="text/javascript">
+		const submitButton = document.querySelector(".submit-button");
+		
+		submitButton.onclick = () =>{
+			const username = document.querySelector(".username");
+			const password = document.querySelector(".password");
+			const name = document.querySelector(".name");
+			
+			let user = {
+				username :null,
+				password : null,
+				name : null
+			};
+			
+			user.username= username.value;  //input에 입력값들고오기
+			user.password = password.value;
+			user.name = name.value;
+			
+			let requestData ={
+				async : false, //동기처리 true : 비동기처리
+				type : "post",  //method type 지정
+				url : "/api/ajax1", //요청날릴 주소
+				data: user,  // 위의 let user 를 의미
+				dataType : "text",
+				success : response =>{
+					alert("get or post 요청성공")
+					alert("response : "+ response)
+				},
+				error : function(response) {
+					alert("get or post 요청 실패");
+				}
+			};
+			
+			$.ajax(requestData);
+			
+			
+			alert(`
+username->${user.username}
+password->${user.password}
+name->${user.name}
+`);
+			
+			alert("ajax1 데이터전송");
+		}
+	</script>
+	
+</body>
+</html>
