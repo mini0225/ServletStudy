@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<input type="text" class="phone" placeholder="전화번호"></input>
+	<input type="text" class="phone" placeholder="전화번호"></input>
+	<input type="text" class="phone" placeholder="전화번호"></input>
+	<button type="button" class ="submit-button">전송</button>
+	
+	 <script type="text/javascript">
+	 	const  submitButton = document.querySelector(".submit-button");
+	 	
+	 	submitButton.onclick =()=>{
+	 		const phones = document.querySelectorAll(".phone");
+	 		
+	 		let phoneNumber = {
+	 				phone1:phones[0].value,
+	 				phone2:phones[1].value,
+	 				phone3:phones[2].value
+	 		}
+	 		
+	 		let requestData = {
+	 			data : JSON.stringify(phoneNumber)
+	 		};
+	 		
+		 	$.ajax({
+		 		async : false,
+		 		type : "post",
+		 		url : "/api/ajax3",
+		 		data : requestData,
+		 		//dataType: "text", 응답받을 데이터 타입(response type)
+		 		dataType: "json", 
+		 		success : response =>{
+		 			alert("ajax3 데이터 전송 성공")
+		 			alert(response)
+		 			console.log(response)
+		 			
+		 		},
+		 		error : response =>{
+		 			alert("ajax3 데이터 전송 실패")
+		 			
+		 		}
+		 	});
+	 	}
+	</script>
+	
+</body>
+</html>
